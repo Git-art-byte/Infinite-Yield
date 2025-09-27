@@ -1,0 +1,600 @@
+COREGUI = cloneref(game:GetService("CoreGui"))
+Players = cloneref(game:GetService("Players"))
+UserInputService = cloneref(game:GetService("UserInputService"))
+TweenService = cloneref(game:GetService("TweenService"))
+HttpService = cloneref(game:GetService("HttpService"))
+MarketplaceService = cloneref(game:GetService("MarketplaceService"))
+RunService = cloneref(game:GetService("RunService"))
+TeleportService = cloneref(game:GetService("TeleportService"))
+StarterGui = cloneref(game:GetService("StarterGui"))
+GuiService = cloneref(game:GetService("GuiService"))
+Lighting = cloneref(game:GetService("Lighting"))
+ContextActionService = cloneref(game:GetService("ContextActionService"))
+ReplicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
+GroupService = cloneref(game:GetService("GroupService"))
+PathService = cloneref(game:GetService("PathfindingService"))
+SoundService = cloneref(game:GetService("SoundService"))
+Teams = cloneref(game:GetService("Teams"))
+StarterPlayer = cloneref(game:GetService("StarterPlayer"))
+InsertService = cloneref(game:GetService("InsertService"))
+ChatService = cloneref(game:GetService("Chat"))
+ProximityPromptService = cloneref(game:GetService("ProximityPromptService"))
+ContentProvider = cloneref(game:GetService("ContentProvider"))
+StatsService = cloneref(game:GetService("Stats"))
+MaterialService = cloneref(game:GetService("MaterialService"))
+AvatarEditorService = cloneref(game:GetService("AvatarEditorService"))
+TextService = cloneref(game:GetService("TextService"))
+TextChatService = cloneref(game:GetService("TextChatService"))
+CaptureService = cloneref(game:GetService("CaptureService"))
+VoiceChatService = cloneref(game:GetService("VoiceChatService"))
+PlayerGui = cloneref(Players.LocalPlayer:FindFirstChildWhichIsA("PlayerGui"))
+IsOnMobile = table.find({Enum.Platform.Android, Enum.Platform.IOS}, UserInputService:GetPlatform())
+isLegacyChat = TextChatService.ChatVersion == Enum.ChatVersion.LegacyChatService
+    ["infiniteyield/assets/settings.png"] = "rbxassetid://1204397029"
+SettingsButton = Instance.new("ImageButton")
+Settings = Instance.new("Frame")
+Prefix = Instance.new("TextLabel")
+PrefixBox = Instance.new("TextBox")
+if get_hidden_gui or gethui then
+    local hiddenUI = get_hidden_gui or gethui
+    local Main = Instance.new("ScreenGui")
+elseif (not is_sirhurt_closure) and (syn and syn.protect_gui) then
+    local Main = Instance.new("ScreenGui")
+    syn.protect_gui(Main)
+    Main.Parent = COREGUI
+elseif COREGUI:FindFirstChild("RobloxGui") then
+    PARENT = COREGUI.RobloxGui
+    local Main = Instance.new("ScreenGui")
+    Main.Parent = COREGUI
+SettingsButton.Name = "SettingsButton"
+SettingsButton.Parent = Holder
+SettingsButton.BackgroundTransparency = 1
+SettingsButton.Position = UDim2.new(0, 230, 0, 0)
+SettingsButton.Size = UDim2.new(0, 20, 0, 20)
+SettingsButton.Image = getcustomasset("infiniteyield/assets/settings.png")
+SettingsButton.ZIndex = 10
+Settings.Name = "Settings"
+Settings.Parent = Holder
+Settings.Active = true
+Settings.BackgroundColor3 = Color3.fromRGB(36, 36, 37)
+Settings.BorderSizePixel = 0
+Settings.Position = UDim2.new(0, 0, 0, 220)
+Settings.Size = UDim2.new(0, 250, 0, 175)
+Settings.ZIndex = 10
+table.insert(shade1,Settings)
+SettingsHolder = Instance.new("ScrollingFrame")
+SettingsHolder.Name = "Holder"
+SettingsHolder.Parent = Settings
+SettingsHolder.BackgroundTransparency = 1
+SettingsHolder.BorderSizePixel = 0
+SettingsHolder.Size = UDim2.new(1,0,1,0)
+SettingsHolder.ScrollBarImageColor3 = Color3.fromRGB(78,78,79)
+SettingsHolder.BottomImage = "rbxasset://textures/ui/Scroll/scroll-middle.png"
+SettingsHolder.CanvasSize = UDim2.new(0, 0, 0, 235)
+SettingsHolder.MidImage = "rbxasset://textures/ui/Scroll/scroll-middle.png"
+SettingsHolder.ScrollBarThickness = 8
+SettingsHolder.TopImage = "rbxasset://textures/ui/Scroll/scroll-middle.png"
+SettingsHolder.VerticalScrollBarInset = 'Always'
+SettingsHolder.ZIndex = 10
+table.insert(scroll,SettingsHolder)
+Prefix.Name = "Prefix"
+Prefix.Parent = SettingsHolder
+Prefix.BackgroundColor3 = Color3.fromRGB(46, 46, 47)
+Prefix.BorderSizePixel = 0
+Prefix.BackgroundTransparency = 1
+Prefix.Position = UDim2.new(0, 5, 0, 5)
+Prefix.Size = UDim2.new(1, -10, 0, 20)
+Prefix.Font = Enum.Font.SourceSans
+Prefix.TextSize = 14
+Prefix.Text = "Prefix"
+Prefix.TextColor3 = Color3.new(1, 1, 1)
+Prefix.TextXAlignment = Enum.TextXAlignment.Left
+Prefix.ZIndex = 10
+table.insert(shade2,Prefix)
+table.insert(text1,Prefix)
+PrefixBox.Name = "PrefixBox"
+PrefixBox.Parent = Prefix
+PrefixBox.BackgroundColor3 = Color3.fromRGB(78, 78, 79)
+PrefixBox.BorderSizePixel = 0
+PrefixBox.Position = UDim2.new(1, -20, 0, 0)
+PrefixBox.Size = UDim2.new(0, 20, 0, 20)
+PrefixBox.Font = Enum.Font.SourceSansBold
+PrefixBox.TextSize = 14
+PrefixBox.Text = ''
+PrefixBox.TextColor3 = Color3.new(0, 0, 0)
+PrefixBox.ZIndex = 10
+table.insert(shade3,PrefixBox)
+table.insert(text2,PrefixBox)
+function makeSettingsButton(name,iconID,off)
+ColorsButton = makeSettingsButton("Edit Theme",getcustomasset("infiniteyield/assets/edittheme.png"))
+ColorsButton.Parent = SettingsHolder
+Keybinds = makeSettingsButton("Edit Keybinds",getcustomasset("infiniteyield/assets/editkeybinds.png"))
+Keybinds.Parent = SettingsHolder
+Aliases = makeSettingsButton("Edit Aliases",getcustomasset("infiniteyield/assets/editaliases.png"))
+Aliases.Parent = SettingsHolder
+StayOpen.Parent = SettingsHolder
+Positions = makeSettingsButton("Edit/Goto Waypoints",getcustomasset("infiniteyield/assets/editwaypoints.png"))
+Positions.Parent = SettingsHolder
+EventBind = makeSettingsButton("Edit Event Binds",getcustomasset("infiniteyield/assets/bindsandplugins.png"),759)
+EventBind.Parent = SettingsHolder
+Plugins = makeSettingsButton("Manage Plugins",getcustomasset("infiniteyield/assets/bindsandplugins.png"),743)
+Plugins.Parent = SettingsHolder
+KeybindsFrame.Parent = Settings
+PositionsFrame.Parent = Settings
+AliasesFrame.Parent = Settings
+PluginsFrame.Parent = Settings
+		local totalTextSize = TextService:GetTextSize(text,self.TextBox.TextSize,self.TextBox.Font,Vector2.new(999999999,100)).X
+		local cursorTextSize = TextService:GetTextSize(cursorText,self.TextBox.TextSize,self.TextBox.Font,Vector2.new(999999999,100)).X
+        TextChatService.TextChannels.RBXGeneral:SendAsync(str)
+	local service = ''
+			service = getS.ClassName
+		return 'game:GetService("'..service..'").'..fullname
+		return 'game:GetService("'..service..'")'..fullname
+function dragGUI(gui)
+			TweenService:Create(gui, TweenInfo.new(.20), {Position = Position}):Play()
+		gui.InputBegan:Connect(function(input)
+				startPos = gui.Position
+		gui.InputChanged:Connect(function(input)
+		UserInputService.InputChanged:Connect(function(input)
+dragGUI(logs)
+dragGUI(KeybindEditor)
+dragGUI(PluginEditor)
+dragGUI(ToPartFrame)
+		{10,"Frame",{BackgroundColor3=Color3.new(0.14117647707462,0.14117647707462,0.14509804546833),BackgroundTransparency=1,BorderColor3=Color3.new(0.3137255012989,0.3137255012989,0.3137255012989),BorderSizePixel=0,ClipsDescendants=true,Name="Settings",Parent={6},Position=UDim2.new(1,0,0,0),Size=UDim2.new(0,150,1,0),ZIndex=10,}},
+		{16,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Title",Parent={11},Size=UDim2.new(1,0,0,20),Text="Event Settings",TextColor3=Color3.new(1,1,1),TextSize=14,ZIndex=10,}},
+		{52,"TextButton",{BackgroundColor3=currentShade1,BorderSizePixel=0,Font=3,Name="Settings",Parent={49},Position=UDim2.new(1,-40,0,0),Size=UDim2.new(0,20,0,20),Text="",TextColor3=Color3.new(1,1,1),TextSize=18,ZIndex=10,}},
+		{53,"ImageLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Image=getcustomasset("infiniteyield/assets/settings.png"),Parent={52},Position=UDim2.new(0,2,0,2),Size=UDim2.new(0,16,0,16),ZIndex=10,}},
+	local settingsFrame = mainFrame:WaitForChild("Settings"):WaitForChild("Slider")
+	local settingsTemplates = mainFrame.Settings:WaitForChild("Templates")
+	local settingsList = settingsFrame:WaitForChild("List"):WaitForChild("Holder")
+	table.insert(text1,cmdTemplate.TextBox) table.insert(shade2,cmdTemplate.Delete) table.insert(shade2,cmdTemplate.Settings)
+	table.insert(scroll,mainFrame.List) table.insert(shade1,settingsFrame) table.insert(shade2,settingsFrame.Line)
+	table.insert(shade2,settingsFrame.Close) table.insert(scroll,settingsFrame.List) table.insert(shade2,settingsTemplates.DelayEditor.Secs)
+	table.insert(text1,settingsTemplates.DelayEditor.Secs) table.insert(text1,settingsTemplates.DelayEditor.Secs.Label) table.insert(text1,settingsTemplates.Players.Title)
+	table.insert(shade3,settingsTemplates.Players.CustomButton) table.insert(shade2,settingsTemplates.Players.Custom) table.insert(text1,settingsTemplates.Players.Custom)
+	table.insert(shade3,settingsTemplates.Players.Any.Button) table.insert(shade3,settingsTemplates.Players.Me.Button) table.insert(text1,settingsTemplates.Players.Any)
+	table.insert(text1,settingsTemplates.Players.Me) table.insert(text1,settingsTemplates.Strings.Title) table.insert(text1,settingsTemplates.Strings.Any)
+	table.insert(shade3,settingsTemplates.Strings.Any.Button) table.insert(shade3,settingsTemplates.Strings.CustomButton) table.insert(text1,settingsTemplates.Strings.Custom)
+	table.insert(shade2,settingsTemplates.Strings.Custom)
+	table.insert(text1,settingsTemplates.Players.Me) table.insert(text1,settingsTemplates.Numbers.Title) table.insert(text1,settingsTemplates.Numbers.Any)
+	table.insert(shade3,settingsTemplates.Numbers.Any.Button) table.insert(shade3,settingsTemplates.Numbers.CustomButton) table.insert(text1,settingsTemplates.Numbers.Custom)
+	table.insert(shade2,settingsTemplates.Numbers.Custom)
+	settingsFrame:WaitForChild("Close").MouseButton1Click:Connect(function()
+		settingsFrame:TweenPosition(UDim2.new(0,-150,0,0),Enum.EasingDirection.Out,Enum.EasingStyle.Quart,0.25,true)
+		TweenService:Create(eventList,tweenInf,{CanvasSize = UDim2.new(0,0,0,size)}):Play()
+	local function resizeSettingsList()
+		for i,v in pairs(settingsList:GetChildren()) do
+		settingsList.Parent.CanvasSize = UDim2.new(0,0,0,size)
+		if size > settingsList.Parent.AbsoluteSize.Y then
+			settingsList.Size = UDim2.new(1,-8,1,0)
+			settingsList.Size = UDim2.new(1,0,1,0)
+	local function openSettingsEditor(event,cmd)
+		for i,v in pairs(settingsList:GetChildren()) do if v:IsA("Frame") then v:Destroy() end end
+		local delayEditor = settingsTemplates.DelayEditor:Clone()
+		delayEditor.Parent = settingsList
+				local template = settingsTemplates.Players:Clone()
+				template.Parent = settingsList
+				local template = settingsTemplates.Strings:Clone()
+				template.Parent = settingsList
+				local template = settingsTemplates.Numbers:Clone()
+				template.Parent = settingsList
+		resizeSettingsList()
+		settingsFrame:TweenPosition(UDim2.new(0,0,0,0),Enum.EasingDirection.Out,Enum.EasingStyle.Quart,0.25,true)
+	local function defaultSettings(ev)
+					table.insert(shade2,cmdF.Settings)
+					cmdF.Settings.MouseButton1Click:Connect(function()
+						openSettingsEditor(event,cmd)
+							settingsFrame:TweenPosition(UDim2.new(0,-150,0,0),Enum.EasingDirection.Out,Enum.EasingStyle.Quart,0.25,true)
+					event.commands[#event.commands+1] = {newBox.Text,defaultSettings(event),0}
+		return HttpService:JSONEncode(result)
+		local data = HttpService:JSONDecode(str)
+	dragGUI(main)
+		{96,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Text",Parent={91},Position=UDim2.new(0,8,0,78),Size=UDim2.new(1,-8,0,32),Text=";drophats\\respawn - drops your hats and respawns you\n;enable inventory\\enable playerlist\\refresh - enables those coregui items and refreshes you",TextColor3=Color3.new(1,1,1),TextSize=14,TextWrapped=true,TextXAlignment=0,TextYAlignment=0,ZIndex=10,}},
+		{109,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Text",Parent={105},Position=UDim2.new(0,8,0,70),Size=UDim2.new(1,-8,0,48),Text="Some events may send arguments; you can use them in your event command by using $ followed by the argument number ($1, $2, etc). You can find out the order and types of these arguments by looking at the settings of the event command.",TextColor3=Color3.new(1,1,1),TextSize=14,TextWrapped=true,TextXAlignment=0,ZIndex=10,}},
+	dragGUI(main)
+defaultGuiScale = IsOnMobile and 0.9 or 1
+defaultsettings = {
+	prefix = ';';
+	guiScale = defaultGuiScale;
+defaults = HttpService:JSONEncode(defaultsettings)
+useFactorySettings = function()
+    prefix = ';'
+    guiScale = defaultGuiScale
+                    local json = HttpService:JSONDecode(out)
+                    if vtype(json.prefix, "string") then prefix = json.prefix else prefix = ';' end
+                    if vtype(json.guiScale, "number") then guiScale = json.guiScale else guiScale = defaultGuiScale end
+                    useFactorySettings()
+                    createPopup("There was a problem writing a save file to your PC.\n\nPlease contact the developer/support team for your exploit and tell them writefile/readfile is not working.\n\nYour settings, keybinds, waypoints, and aliases will not save if you continue.\n\nThings to try:\n> Make sure a 'workspace' folder is located in the same folder as your exploit\n> If your exploit is inside of a zip/rar file, extract it.\n> Rejoin the game and try again or restart your PC and try again.")
+                useFactorySettings()
+                createPopup("There was a problem writing a save file to your PC.\n\nPlease contact the developer/support team for your exploit and tell them writefile/readfile is not working.\n\nYour settings, keybinds, waypoints, and aliases will not save if you continue.\n\nThings to try:\n> Make sure a 'workspace' folder is located in the same folder as your exploit\n> If your exploit is inside of a zip/rar file, extract it.\n> Rejoin the game and try again or restart your PC and try again.")
+            useFactorySettings()
+            createPopup("Sorry, we have attempted to parse your save file, but it is unreadable!\n\nInfinite Yield is now using factory settings until your exploit's file system works.\n\nYour save file has not been deleted.")
+            useFactorySettings()
+			prefix = prefix;
+			guiScale = guiScale;
+		writefileCooldown("IY_FE.iy", HttpService:JSONEncode(update))
+PrefixBox.Text = prefix
+local SettingsOpen = false
+		TweenService:Create(tl, TweenInfo.new(1.25, Enum.EasingStyle.Linear), { TextTransparency = 0 }):Play()
+	local json = HttpService:JSONDecode(user)
+	if (Key==prefix) then
+		RunService.RenderStepped:Wait()
+				local pickerGui = picker.ColorPicker
+				local pickerTopBar = pickerGui.TopBar
+				local pickerFrame = pickerGui.Content
+				dragGUI(picker)
+							releaseEvent = UserInputService.InputEnded:Connect(function(input)
+							releaseEvent = UserInputService.InputEnded:Connect(function(input)
+						releaseEvent = UserInputService.InputEnded:Connect(function(input)
+						mouseEvent = UserInputService.InputChanged:Connect(function(input)
+						releaseEvent = UserInputService.InputEnded:Connect(function(input)
+						mouseEvent = UserInputService.InputChanged:Connect(function(input)
+SettingsButton.MouseButton1Click:Connect(function()
+	if SettingsOpen == false then SettingsOpen = true
+		Settings:TweenPosition(UDim2.new(0, 0, 0, 45), "InOut", "Quart", 0.5, true, nil)
+	else SettingsOpen = false
+		Settings:TweenPosition(UDim2.new(0, 0, 0, 220), "InOut", "Quart", 0.5, true, nil)
+    notify("Saves", "Your exploit does not support read/write file. Your settings will not save.")
+      local d = HttpService:JSONDecode(httprequest({
+    local log = HttpService:JSONEncode({
+			local placeName = CleanFileName(MarketplaceService:GetProductInfo(PlaceId).Name)
+	if ESPenabled or CHMSenabled or COREGUI:FindFirstChild(player.Name..'_LC') then
+		for i,v in pairs(COREGUI:GetChildren()) do
+	SettingsHolder.Visible = false
+	SettingsHolder.Visible = true
+	SettingsHolder.Visible = false
+	SettingsHolder.Visible = true
+	SettingsHolder.Visible = false
+	SettingsHolder.Visible = true
+	SettingsHolder.Visible = false
+PrefixBox:GetPropertyChangedSignal("Text"):Connect(function()
+	prefix = PrefixBox.Text
+	Cmdbar.PlaceholderText = "Command Bar ("..prefix..")"
+function dragMain(dragpoint,gui)
+				TweenService:Create(Notification, TweenInfo.new(.20), {Position = Position}):Play()
+				TweenService:Create(Notification, TweenInfo.new(.20), {Position = Position}):Play()
+				local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, gui.Position.Y.Scale, gui.Position.Y.Offset)
+				TweenService:Create(gui, TweenInfo.new(.20), {Position = Position}):Play()
+				TweenService:Create(Notification, TweenInfo.new(.20), {Position = Position2}):Play()
+				local Position = UDim2.new(1, -250, gui.Position.Y.Scale, gui.Position.Y.Offset)
+				TweenService:Create(gui, TweenInfo.new(.20), {Position = Position}):Play()
+				gui:TweenPosition(UDim2.new(1, -CamViewport(), gui.Position.Y.Scale, gui.Position.Y.Offset), "InOut", "Quart", 0.04, true, nil)
+				local Position = UDim2.new(1, -CamViewport(), gui.Position.Y.Scale, gui.Position.Y.Offset)
+				TweenService:Create(gui, TweenInfo.new(.20), {Position = Position}):Play()
+				TweenService:Create(Notification, TweenInfo.new(.20), {Position = Position2}):Play()
+				startPos = gui.Position
+		UserInputService.InputChanged:Connect(function(input)
+	local success, result = pcall(function() chatbox = PlayerGui:WaitForChild("Chat").Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar end)
+			if chatbox.Text:lower():sub(1,1) == prefix then
+				if SettingsOpen == true then
+					Settings:TweenPosition(UDim2.new(0, 0, 0, 220), "InOut", "Quart", 0.2, true, nil)
+				IndexContents(PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar.Text:lower():sub(2),true)
+				if SettingsOpen == true then
+					Settings:TweenPosition(UDim2.new(0, 0, 0, 45), "InOut", "Quart", 0.2, true, nil)
+			if not enterpressed or chatbox.Text:lower():sub(1,1) ~= prefix then
+		PlayerGui:WaitForChild("Chat").Frame.ChatBarParentFrame.ChildAdded:Connect(function(newbar)
+				chatbox = PlayerGui:WaitForChild("Chat").Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
+		--print('Custom chat detected. Will not provide suggestions for commands typed in the chat.')
+	RunService.RenderStepped:Wait()
+CMDs[#CMDs + 1] = {NAME = 'guiscale [number]', DESC = 'Changes the size of the gui. [number] accepts both decimals and whole numbers. Min is 0.4 and Max is 2'}
+CMDs[#CMDs + 1] = {NAME = 'enable [inventory/playerlist/chat/reset/emotes/all]', DESC = 'Toggles visibility of coregui items'}
+CMDs[#CMDs + 1] = {NAME = 'disable [inventory/playerlist/chat/reset/emotes/all]', DESC = 'Toggles visibility of coregui items'}
+CMDs[#CMDs + 1] = {NAME = 'showguis', DESC = 'Shows any invisible GUIs'}
+CMDs[#CMDs + 1] = {NAME = 'unshowguis', DESC = 'Undoes showguis'}
+CMDs[#CMDs + 1] = {NAME = 'hideguis', DESC = 'Hides any GUIs in PlayerGui'}
+CMDs[#CMDs + 1] = {NAME = 'unhideguis', DESC = 'Undoes hideguis'}
+CMDs[#CMDs + 1] = {NAME = 'guidelete', DESC = 'Enables backspace to delete GUI'}
+CMDs[#CMDs + 1] = {NAME = 'unguidelete / noguidelete', DESC = 'Disables guidelete'}
+CMDs[#CMDs + 1] = {NAME = 'hideiy', DESC = 'Hides the main IY GUI'}
+CMDs[#CMDs + 1] = {NAME = 'logs', DESC = 'Opens the logs GUI'}
+CMDs[#CMDs + 1] = {NAME = 'reset', DESC = 'Resets your character normally'}
+CMDs[#CMDs + 1] = {NAME = 'nobillboardgui / nobgui / noname', DESC = 'Removes billboard and surface GUIs from your players (i.e. name GUIs at cafes)'}
+CMDs[#CMDs + 1] = {NAME = 'loopnobgui / loopnoname', DESC = 'Loop removes billboard and surface GUIs from your players (i.e. name GUIs at cafes)'}
+CMDs[#CMDs + 1] = {NAME = 'unloopnobgui / unloopnoname', DESC = 'Disables loopnobgui'}
+CMDs[#CMDs + 1] = {NAME = 'animation / anim [ID] [speed]', DESC = 'Makes your character perform an animation (must be an animation on the marketplace or by roblox/stickmasterluke to replicate)'}
+CMDs[#CMDs + 1] = {NAME = 'clickdelete', DESC = 'Go to Settings > Keybinds > Add for click delete'}
+CMDs[#CMDs + 1] = {NAME = 'clickteleport', DESC = 'Go to Settings > Keybinds > Add for click teleport'}
+	local guisAtPosition = COREGUI:GetGuiObjectsAtPosition(IYMouse.X, IYMouse.Y)
+	for _, gui in pairs(guisAtPosition) do
+		if gui.Parent == CMDsF then
+			t = gui
+	if strn:sub(1,string.len(prefix))==prefix then return{'cmd',string.len(prefix)+1}
+UserInputService.TextBoxFocused:Connect(function(obj)
+		if not (UserInputService:IsKeyDown(Enum.KeyCode.Return) or UserInputService:IsKeyDown(Enum.KeyCode.KeypadEnter)) then
+UserInputService.InputBegan:Connect(function(input,gameProcessed)
+Cmdbar.PlaceholderText = "Command Bar ("..prefix..")"
+		local cmdbarText = Cmdbar.Text:gsub("^"..prefix,"")
+		if SettingsOpen == true then
+			Settings:TweenPosition(UDim2.new(0, 0, 0, 45), "InOut", "Quart", 0.2, true, nil)
+	if SettingsOpen == true then
+		Settings:TweenPosition(UDim2.new(0, 0, 0, 220), "InOut", "Quart", 0.2, true, nil)
+	tabComplete = UserInputService.InputBegan:Connect(function(input,gameProcessed)
+		for i,v in pairs(COREGUI:GetChildren()) do
+		if plr.Character and plr.Name ~= Players.LocalPlayer.Name and not COREGUI:FindFirstChild(plr.Name..'_ESP') then
+			ESPholder.Parent = COREGUI
+				local BillboardGui = Instance.new("BillboardGui")
+				BillboardGui.Adornee = plr.Character.Head
+				BillboardGui.Name = plr.Name
+				BillboardGui.Parent = ESPholder
+				BillboardGui.Size = UDim2.new(0, 100, 0, 150)
+				BillboardGui.StudsOffset = Vector3.new(0, 1, 0)
+				BillboardGui.AlwaysOnTop = true
+				TextLabel.Parent = BillboardGui
+					if COREGUI:FindFirstChild(plr.Name..'_ESP') then
+				espLoopFunc = RunService.RenderStepped:Connect(espLoop)
+		for i,v in pairs(COREGUI:GetChildren()) do
+		if plr.Character and plr.Name ~= Players.LocalPlayer.Name and not COREGUI:FindFirstChild(plr.Name..'_CHMS') then
+			ESPholder.Parent = COREGUI
+		for i,v in pairs(COREGUI:GetChildren()) do
+		if plr.Character and plr.Name ~= Players.LocalPlayer.Name and not COREGUI:FindFirstChild(plr.Name..'_LC') then
+			ESPholder.Parent = COREGUI
+				local BillboardGui = Instance.new("BillboardGui")
+				BillboardGui.Adornee = plr.Character.Head
+				BillboardGui.Name = plr.Name
+				BillboardGui.Parent = ESPholder
+				BillboardGui.Size = UDim2.new(0, 100, 0, 150)
+				BillboardGui.StudsOffset = Vector3.new(0, 1, 0)
+				BillboardGui.AlwaysOnTop = true
+				TextLabel.Parent = BillboardGui
+					if COREGUI:FindFirstChild(plr.Name..'_LC') then
+				lcLoopFunc = RunService.RenderStepped:Connect(lcLoop)
+local bindsGUI = KeybindEditor
+UserInputService.InputBegan:Connect(onInputBegan)
+UserInputService.InputEnded:Connect(onInputEnded)
+			if input == 'RightClick' and UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) and Players.LocalPlayer.Character then
+			elseif input == 'LeftClick' and UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) and Players.LocalPlayer.Character then
+			elseif UserInputService:IsKeyDown(Enum.KeyCode[input:sub(14)]) and Players.LocalPlayer.Character then
+			if input == 'RightClick' and UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
+			elseif input == 'LeftClick' and UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) then
+			elseif UserInputService:IsKeyDown(Enum.KeyCode[input:sub(14)]) then
+PluginsGUI = PluginEditor.background
+		print("Original Error: "..tostring(plerror))
+		print("Plugin Error, stack traceback: "..tostring(debug.traceback()))
+	addPlugin(PluginsGUI.FileName.Text)
+		SettingsHolder.Visible = false
+	SettingsHolder.Visible = true
+			Body = HttpService:JSONEncode({
+				nonce = HttpService:GenerateGUID(false),
+		dragGUI(FRAME)
+		local SINFOGUI = background
+		local Asset = MarketplaceService:GetProductInfo(PlaceId)
+		SINFOGUI.name.Text = "Place Name: " .. Asset.Name
+		SINFOGUI.playerid.Text = "Player ID: " ..speaker.UserId
+		SINFOGUI.maxplayers.Text = Players.MaxPlayers.. " Players Max"
+		SINFOGUI.placeid.Text = "Place ID: " ..PlaceId
+			SINFOGUI.players.Text = #players.. " Player(s)"
+			SINFOGUI.appearance.Text = "Appearance: " ..speaker.CharacterAppearanceId
+					SINFOGUI.Time.Text = seconds .. " Second(s)" else
+					SINFOGUI.Time.Text = minutes .. " Minute(s), " .. seconds .. " Second(s)"
+				SINFOGUI.Time.Text = hours .. " Hour(s), " .. minutes .. " Minute(s), " .. seconds .. " Second(s)"
+		until SINFOGUI.Parent == nil
+	TeleportService:Teleport(args[1])
+		TeleportService:Teleport(PlaceId, Players.LocalPlayer)
+		TeleportService:TeleportToPlaceInstance(PlaceId, JobId, Players.LocalPlayer)
+	GuiService.ErrorMessageChanged:Connect(function()
+    local body = HttpService:JSONDecode(req)
+        TeleportService:TeleportToPlaceInstance(PlaceId, servers[math.random(1, #servers)], Players.LocalPlayer)
+	Noclipping = RunService.Stepped:Connect(NoclipLoop)
+	flyKeyDown = UserInputService.InputBegan:Connect(function(input, processed)
+	flyKeyUp = UserInputService.InputEnded:Connect(function(input, processed)
+	mfly2 = RunService.RenderStepped:Connect(function()
+	CFloop = RunService.Heartbeat:Connect(function(deltaTime)
+			FloatingFunc = RunService.Heartbeat:Connect(FloatPadLoop)
+		gravReset = Humanoid.Died:Connect(swimDied)
+		swimbeat = RunService.Heartbeat:Connect(function()
+				speaker.Character.HumanoidRootPart.Velocity = ((Humanoid.MoveDirection ~= Vector3.new() or UserInputService:IsKeyDown(Enum.KeyCode.Space)) and speaker.Character.HumanoidRootPart.Velocity or Vector3.new())
+		if gravReset then
+			gravReset:Disconnect()
+	if SettingsOpen == false then SettingsOpen = true
+		Settings:TweenPosition(UDim2.new(0, 0, 0, 45), "InOut", "Quart", 0.5, true, nil)
+	SettingsHolder.Visible = false
+				TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {CFrame = CFrame.new(x,y,z)}):Play()
+				TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {CFrame = CFrame.new(pWayPoints[i].COORD[1].Position)}):Play()
+local coreGuiTypeNames = {
+	["inventory"] = Enum.CoreGuiType.Backpack,
+	["leaderboard"] = Enum.CoreGuiType.PlayerList,
+	["emotes"] = Enum.CoreGuiType.EmotesMenu
+for _, enumItem in ipairs(Enum.CoreGuiType:GetEnumItems()) do
+	coreGuiTypeNames[enumItem.Name:lower()] = enumItem
+		if input == "reset" then
+			StarterGui:SetCore("ResetButtonCallback", true)
+			local coreGuiType = coreGuiTypeNames[input]
+			if coreGuiType then
+				StarterGui:SetCoreGuiEnabled(coreGuiType, true)
+		if input == "reset" then
+			StarterGui:SetCore("ResetButtonCallback", false)
+			local coreGuiType = coreGuiTypeNames[input]
+			if coreGuiType then
+				StarterGui:SetCoreGuiEnabled(coreGuiType, false)
+local invisGUIS = {}
+addcmd('showguis',{},function(args, speaker)
+	for i,v in pairs(PlayerGui:GetDescendants()) do
+			if not FindInTable(invisGUIS,v) then
+				table.insert(invisGUIS,v)
+addcmd('unshowguis',{},function(args, speaker)
+	for i,v in pairs(invisGUIS) do
+	invisGUIS = {}
+local hiddenGUIS = {}
+addcmd('hideguis',{},function(args, speaker)
+	for i,v in pairs(PlayerGui:GetDescendants()) do
+			if not FindInTable(hiddenGUIS,v) then
+				table.insert(hiddenGUIS,v)
+addcmd('unhideguis',{},function(args, speaker)
+	for i,v in pairs(hiddenGUIS) do
+	hiddenGUIS = {}
+function deleteGuisAtPos()
+		local guisAtPosition = PlayerGui:GetGuiObjectsAtPosition(IYMouse.X, IYMouse.Y)
+		for _, gui in pairs(guisAtPosition) do
+			if gui.Visible == true then
+				gui:Destroy()
+local deleteGuiInput
+addcmd('guidelete',{},function(args, speaker)
+	deleteGuiInput = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+				deleteGuisAtPos()
+	notify('GUI Delete Enabled','Hover over a GUI and press backspace to delete it')
+addcmd('unguidelete',{'noguidelete'},function(args, speaker)
+	if deleteGuiInput then deleteGuiInput:Disconnect() end
+	notify('GUI Delete Disabled','GUI backspace delete has been disabled')
+	if not (args[1] and tostring(args[1]) == 'nonotify') then notify('IY Hidden','You can press the prefix key to access the command bar') end
+	return COREGUI:ToggleRecording()
+	return COREGUI:TakeScreenshot()
+	return GuiService:ToggleFullscreen()
+		GuiService:CloseInspectMenu()
+		GuiService:InspectPlayerFromUserId(Players[v].UserId)
+	GuiService:ClearError()
+	local TeleportService = TeleportService
+		if self == TeleportService then
+		if self == TeleportService and getnamecallmethod():lower() == "teleport" or getnamecallmethod() == "TeleportToPlaceInstance" then
+	TeleportService:TeleportCancel()
+	UserSettings():GetService("UserGameSettings").MasterVolume = level
+	settings().Rendering.QualityLevel = 1
+				RunService.Heartbeat:Wait()
+	for i,c in pairs(COREGUI:GetChildren()) do
+		for i,c in pairs(COREGUI:GetChildren()) do
+			for i,c in pairs(COREGUI:GetChildren()) do
+		for i,c in pairs(COREGUI:GetChildren()) do
+	function Spring:Reset(pos)
+		local shift = UserInputService:IsKeyDown(Enum.KeyCode.LeftShift)
+			ContextActionService:BindActionAtPriority("FreecamKeyboard",Keypress,false,INPUT_PRIORITY,
+			ContextActionService:BindActionAtPriority("FreecamMousePan",MousePan,false,INPUT_PRIORITY,Enum.UserInputType.MouseMovement)
+			ContextActionService:UnbindAction("FreecamKeyboard")
+			ContextActionService:UnbindAction("FreecamMousePan")
+		mouseIconEnabled = UserInputService.MouseIconEnabled
+		UserInputService.MouseIconEnabled = true
+		mouseBehavior = UserInputService.MouseBehavior
+		UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+		UserInputService.MouseIconEnabled = mouseIconEnabled
+		UserInputService.MouseBehavior = mouseBehavior
+	velSpring:Reset(Vector3.new())
+	panSpring:Reset(Vector2.new())
+	RunService:BindToRenderStep("Freecam", Enum.RenderPriority.Camera.Value, StepFreecam)
+	RunService:UnbindFromRenderStep("Freecam")
+	TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {CFrame = workspace.Camera.CFrame}):Play()
+		local VirtualUser = cloneref(game:GetService("VirtualUser"))
+        local NetworkClient = cloneref(game:GetService("NetworkClient"))
+		settings():GetService("NetworkSettings").IncomingReplicationLag = args[1]
+	COREGUI.PurchasePromptApp.Enabled = false
+	COREGUI.PurchasePromptApp.Enabled = true
+		AvatarEditorService:PromptSaveAvatar(humanoid.HumanoidDescription, Enum.HumanoidRigType[rig])
+		local result = AvatarEditorService.PromptSaveAvatarCompleted:Wait()
+			execCmd("reset")
+		local json = HttpService:JSONDecode(user)
+		local json = HttpService:JSONDecode(user)
+		local OwnerID = GroupService:GetGroupInfoAsync(game.CreatorId).Owner.Id
+		local OwnerID = GroupService:GetGroupInfoAsync(game.CreatorId).Owner.Id
+		local OwnerID = GroupService:GetGroupInfoAsync(game.CreatorId).Owner.Id
+	RunService:Set3dRenderingEnabled(false)
+	RunService:Set3dRenderingEnabled(true)
+		sethidden(MaterialService, "Use2022Materials", true)
+		sethidden(MaterialService, "Use2022Materials", false)
+			TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {CFrame = getRoot(Players[v].Character).CFrame + Vector3.new(3,1,0)}):Play()
+	local path = PathService:CreatePath()
+	local path = PathService:CreatePath()
+        orbit1 = RunService.Heartbeat:Connect(function()
+        orbit2 = RunService.RenderStepped:Connect(function()
+	if not notifiedRespectFiltering and SoundService.RespectFilteringEnabled then notifiedRespectFiltering = true notify('RespectFilteringEnabled','RespectFilteringEnabled is set to true (the command will still work but may only be clientsided)') end
+	if not notifiedRespectFiltering and SoundService.RespectFilteringEnabled then notifiedRespectFiltering = true notify('RespectFilteringEnabled','RespectFilteringEnabled is set to true (the command will still work but may only be clientsided)') end
+addcmd("reset", {}, function(args, speaker)
+	local invisFix = RunService.Stepped:Connect(function()
+	infJump = UserInputService.JumpRequest:Connect(function()
+	flyjump = UserInputService.JumpRequest:Connect(function()
+	HumanModCons.ajLoop = (HumanModCons.ajLoop and HumanModCons.ajLoop:Disconnect() and false) or RunService.RenderStepped:Connect(autoJump)
+		HumanModCons.ajLoop = (HumanModCons.ajLoop and HumanModCons.ajLoop:Disconnect() and false) or RunService.RenderStepped:Connect(autoJump)
+	HumanModCons.ejLoop = (HumanModCons.ejLoop and HumanModCons.ejLoop:Disconnect() and false) or RunService.RenderStepped:Connect(edgejump)
+		HumanModCons.ejLoop = (HumanModCons.ejLoop and HumanModCons.ejLoop:Disconnect() and false) or RunService.RenderStepped:Connect(edgejump)
+addcmd('nobgui',{'unbgui','nobillboardgui','unbillboardgui','noname','rohg'},function(args, speaker)
+		if v:IsA("BillboardGui") or v:IsA("SurfaceGui") then
+addcmd('loopnobgui',{'loopunbgui','loopnobillboardgui','loopunbillboardgui','loopnoname','looprohg'},function(args, speaker)
+		if v:IsA("BillboardGui") or v:IsA("SurfaceGui") then
+		if part:IsA("BillboardGui") or part:IsA("SurfaceGui") then
+addcmd('unloopnobgui',{'unloopunbgui','unloopnobillboardgui','unloopunbillboardgui','unloopnoname','unlooprohg'},function(args, speaker)
+                        return MarketplaceService:GetProductInfo(tonumber(assetId)).Name
+		TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {CFrame = CFrame.new(tpX,tpY,tpZ)}):Play()
+		TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {CFrame = CFrame.new(tpX,tpY,tpZ)}):Play()
+		notify('Click TP','Go to Settings > Keybinds > Add to set up click teleport')
+		notify('Click Delete','Go to Settings > Keybinds > Add to set up click delete')
+    StarterGui:SetCore("DevConsoleVisible", true)
+		if printconsole then
+			printconsole(message)
+		elseif printoutput then
+			printoutput(message)
+			local b = InsertService:LoadLocalAsset(a)
+		headSit = RunService.Heartbeat:Connect(function()
+		ChatService.BubbleChatEnabled = true
+		TextChatService.BubbleChatConfiguration.Enabled = true
+		ChatService.BubbleChatEnabled = false
+		TextChatService.BubbleChatConfiguration.Enabled = false
+			bangLoop = RunService.Stepped:Connect(function()
+			carpetLoop = RunService.Heartbeat:Connect(function()
+			TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {CFrame = v.CFrame}):Play()
+			TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {CFrame = v.CFrame}):Play()
+			TweenService:Create(getRoot(speaker.Character), TweenInfo.new(tweenSpeed, Enum.EasingStyle.Linear), {CFrame = v:GetModelCFrame()}):Play()
+		PromptButtonHoldBegan = ProximityPromptService.PromptButtonHoldBegan:Connect(function(prompt)
+		local RST = RunService.RenderStepped:Connect(function()
+		spinhats = RunService.Stepped:Connect(function()
+			repeat RunService.Heartbeat:wait() until Hats[i]
+			repeat RunService.Heartbeat:wait() until Character:FindFirstChildOfClass("Accessory")
+			repeat RunService.Heartbeat:wait() until not Character:FindFirstChildOfClass("Accessory")
+		execCmd("reset")
+			RunService.Heartbeat:Wait()
+local RS = RunService.RenderStepped
+	brightLoop = RunService.RenderStepped:Connect(brightFunc)
+origsettings = {abt = Lighting.Ambient, oabt = Lighting.OutdoorAmbient, brt = Lighting.Brightness, time = Lighting.ClockTime, fe = Lighting.FogEnd, fs = Lighting.FogStart, gs = Lighting.GlobalShadows}
+	Lighting.Ambient = origsettings.abt
+	Lighting.OutdoorAmbient = origsettings.oabt
+	Lighting.Brightness = origsettings.brt
+	Lighting.ClockTime = origsettings.time
+	Lighting.FogEnd = origsettings.fe
+	Lighting.FogStart = origsettings.fs
+	Lighting.GlobalShadows = origsettings.gs
+    repeat RunService.Heartbeat:Wait()
+            RunService.Heartbeat:Wait()
+        RunService.RenderStepped:Wait()
+        RunService.Stepped:Wait()
+	invisflingStepped = RunService.Stepped:Connect(function()
+    antifling = RunService.Stepped:Connect(function()
+local hb = RunService.Heartbeat
+    xrayLoop = RunService.RenderStepped:Connect(function()
+		cancelAutoClick = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+				if (input.KeyCode == Enum.KeyCode.Backspace and UserInputService:IsKeyDown(Enum.KeyCode.Equals)) or (input.KeyCode == Enum.KeyCode.Equals and UserInputService:IsKeyDown(Enum.KeyCode.Backspace)) then
+	UserInputService.MouseDeltaSensitivity = args[1]
+		stareLoop = RunService.RenderStepped:Connect(stareFunc)
+    antivoidloop = RunService.Stepped:Connect(function()
+                    if v.Parent:FindFirstChild("AdGuiAdornee") then
+    alignmentKeys = UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    alignmentKeysEmotes = StarterGui:GetCoreGuiEnabled(Enum.CoreGuiType.EmotesMenu)
+    StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.EmotesMenu, false)
+        StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.EmotesMenu, alignmentKeysEmotes)
+        SoundService:SetListener(Enum.ListenerType.ObjectPosition, root)
+            SoundService:SetListener(Enum.ListenerType.ObjectPosition, getRoot(Players[player.Name].Character))
+    SoundService:SetListener(Enum.ListenerType.Camera)
+addcmd("guiscale", {}, function(args, speaker)
+            guiScale = scale
+        guiScale = defaultGuiScale
+    Scale.Scale = math.max(Holder.AbsoluteSize.X / 1920, guiScale)
+    VoiceChatService:joinVoice()
+        onVoiceModerated = cloneref(game:GetService("VoiceChatInternal")).LocalPlayerModerated:Connect(function()
+            VoiceChatService:joinVoice()
+		cancelAutoKeyPress = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+				if (input.KeyCode == Enum.KeyCode.Backspace and UserInputService:IsKeyDown(Enum.KeyCode.Equals)) or (input.KeyCode == Enum.KeyCode.Equals and UserInputService:IsKeyDown(Enum.KeyCode.Backspace)) then
+pcall(function() Scale.Scale = math.max(Holder.AbsoluteSize.X / 1920, guiScale) end)
+        if v:IsA("GuiObject") and v.Visible then
+    TextChatService.MessageReceived:Connect(function(message)
+CaptureService.CaptureBegan:Connect(function()
+CaptureService.CaptureEnded:Connect(function()
+		return HttpService:JSONDecode(versionJson)
+			local AnnGUI = Instance.new("Frame")
+			AnnGUI.Name = randomString()
+			AnnGUI.Parent = ScaledHolder
+			AnnGUI.Active = true
+			AnnGUI.BackgroundTransparency = 1
+			AnnGUI.Position = UDim2.new(0.5, -180, 0, -500)
+			AnnGUI.Size = UDim2.new(0, 360, 0, 20)
+			AnnGUI.ZIndex = 10
+			background.Parent = AnnGUI
+			shadow.Parent = AnnGUI
+			AnnGUI:TweenPosition(UDim2.new(0.5, -180, 0, 150), "InOut", "Quart", 0.5, true, nil)
+				AnnGUI:TweenPosition(UDim2.new(0.5, -180, 0, -500), "InOut", "Quart", 0.5, true, nil)
+				AnnGUI:Destroy()
+	TweenService:Create(Logo, OutInfo, {ImageTransparency = 1}):Play()
+	TweenService:Create(IntroBackground, OutInfo, {BackgroundTransparency = 1}):Play()
